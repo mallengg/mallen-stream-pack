@@ -1,31 +1,294 @@
-function mallenChat(){
- document.querySelectorAll(".highlight-chat:not(.mallen-ready)").forEach(c=>{
-  let name=c.querySelector(":scope>.hl-name");
-  let msg=c.querySelector(":scope>.hl-message");
-  if(!name||!msg)return;
+const params = new URLSearchParams(window.location.search);
 
-  c.classList.add("mallen-ready");
+const session =
+    params.get("session") ||
+    "9w2D95rNmA";
 
-  c.querySelectorAll(":scope>.time-arrived").forEach(e=>e.remove());
-  c.querySelectorAll(":scope>.queueid").forEach(e=>e.remove());
+const password =
+    params.get("password") ||
+    "false";
 
-  let h=document.createElement("div");
-  h.className="mallen-header";
 
-  let source=c.querySelector(":scope>.hl-source-type");
-  let avatar=c.querySelector(":scope>.hl-profile-pic");
+/* =========================
+   SOCIAL STREAM BRIDGE
+========================= */
 
-  if(source)h.appendChild(source);
-  if(avatar)h.appendChild(avatar);
-  h.appendChild(name);
+const bridge =
+    document.getElementById("ssn-bridge");
 
-  c.insertBefore(h,msg);
- });
-}
+bridge.src =
+    "https://vdo.socialstream.ninja/" +
+    "?ln" +
+    "&salt=vdo.ninja" +
+    "&notmobile" +
+    "&password=" + encodeURIComponent(password) +
+    "&solo" +
+    "&view=" + encodeURIComponent(session) +
+    "&novideo" +
+    "&noaudio" +
+    "&label=dock" +
+    "&cleanoutput" +
+    "&room=" + encodeURIComponent(session);
 
-new MutationObserver(mallenChat).observe(document.body,{
- childList:true,
- subtree:true
+
+/* =========================
+   RECEBER MENSAGENS
+========================= */
+
+window.addEventListener("message", event => {
+
+    if(event.source !== bridge.contentWindow)
+        return;
+
+    const received =
+        event.data?.dataReceived;
+
+    if(!received)
+        return;
+
+    if(received.overlayNinja){
+        processData(received.overlayNinja);
+    }
+
 });
 
-mallenChat();
+
+/* =========================
+   PROCESSAR SOCIAL STREAM
+========================= */
+
+function processData(data){
+
+    if(data.content)
+        data = data.content;
+
+    if(!data)
+        return;
+
+    if(!data.chatmessage && !data.contentimg)
+        return;
+
+    createMessage(data);
+}
+
+
+/* =========================
+   CRIAR MENSAGEM
+========================= */
+
+function createMessage(data){
+
+    const item =
+        document.createElement("div");
+
+    item.className = "chat-item";
+
+
+    /* CABEÇALHO */
+
+    const header =
+        document.createElement("div");
+
+    header.className = "chat-header";
+
+
+    /* PLATAFORMA */
+
+    const platform =
+        createPlatformIcon(data.type);
+
+    if(platform)
+        header.appendChild(platform);
+
+
+    /* AVATAR */
+
+    if(data.chatimg){
+
+        const avatar =
+            document.createElement("img");
+
+        avatar.className = "avatar";
+        avatar.src = data.chatimg;
+
+        header.appendChild(avatar);
+    }
+
+
+    /* BADGES */
+
+    if(Array.isArray(data.chatbadges)){
+
+        const badges =
+            document.createElement("div");
+
+        badges.className = "badges";
+
+        data.chatbadges.forEach(badge => {
+
+            let src =
+                typeof badge === "string"
+                ? badge
+                : badge?.src;
+
+            if(!src)
+                return;
+
+            const img =
+                document.createElement("img");
+
+            img.src = src;
+
+            badges.appendChild(img);
+        });
+
+        if(badges.children.length)
+            header.appendChild(badges);
+    }
+
+
+    /* NOME */
+
+    const username =
+        document.createElement("span");
+
+    username.className = "username";
+
+    username.textContent =
+        data.chatname || "Usuário";
+
+    header.appendChild(username);
+
+
+    /* CORPO */
+
+    const message =
+        document.createElement("div");
+
+    message.className = "message";
+
+
+    const content =
+        document.createElement("div");
+
+    content.className =
+        "message-content";
+
+    /*
+       O Social Stream já entrega chatmessage
+       com os emotes processados em muitos casos.
+    */
+
+    content.innerHTML =
+        data.chatmessage || "";
+
+    message.appendChild(content);
+
+
+    /* IMAGEM/GIF */
+
+    if(data.contentimg){
+
+        const img =
+            document.createElement("img");
+
+        img.src = data.contentimg;
+        img.style.maxWidth = "100%";
+        img.style.display = "block";
+
+        message.appendChild(img);
+    }
+
+
+    /* DOAÇÃO */
+
+    if(data.hasDonation){
+
+        const donation =
+            document.createElement("div");
+
+        donation.className =
+            "donation";
+
+        donation.textContent =
+            data.hasDonation;
+
+        message.appendChild(donation);
+    }
+
+
+    item.appendChild(header);
+    item.appendChild(message);
+
+    document
+        .getElementById("chat")
+        .appendChild(item);
+
+
+    limitMessages();
+}
+
+
+/* =========================
+   ÍCONES DAS PLATAFORMAS
+========================= */
+
+function createPlatformIcon(type){
+
+    if(!type)
+        return null;
+
+    const img =
+        document.createElement("img");
+
+    img.className =
+        "platform-icon";
+
+    /*
+       Por enquanto usamos os favicons
+       públicos das plataformas.
+    */
+
+    const icons = {
+
+        youtube:
+            "https://www.youtube.com/favicon.ico",
+
+        twitch:
+            "https://www.twitch.tv/favicon.ico",
+
+        facebook:
+            "https://www.facebook.com/favicon.ico",
+
+        tiktok:
+            "https://www.tiktok.com/favicon.ico",
+
+        instagram:
+            "https://www.instagram.com/favicon.ico"
+    };
+
+    const key =
+        String(type).toLowerCase();
+
+    if(!icons[key])
+        return null;
+
+    img.src = icons[key];
+
+    return img;
+}
+
+
+/* =========================
+   LIMITE DE MENSAGENS
+========================= */
+
+function limitMessages(){
+
+    const chat =
+        document.getElementById("chat");
+
+    while(chat.children.length > 8){
+        chat.firstElementChild.remove();
+    }
+}
