@@ -1,27 +1,31 @@
 function mallen(){
- document.querySelectorAll(".highlight-chat").forEach(e=>{
-  if(e.dataset.mallen)return;
+ document.querySelectorAll(".highlight-chat:not(.mallen-ok)").forEach(e=>{
   let m=e.querySelector(".hl-message");
-  if(!m)return;
+  let n=e.querySelector(".hl-name");
+  if(!m||!n)return;
 
-  e.dataset.mallen=1;
-
+  e.classList.add("mallen-ok");
   e.querySelectorAll(".time-arrived").forEach(x=>x.remove());
 
   let h=document.createElement("div");
   h.className="mallen-header";
 
-  [...e.children].forEach(x=>{
-   if(x!==m&&!x.contains(m))h.appendChild(x);
+  let els=[...e.children];
+
+  els.forEach(x=>{
+   if(
+    x===n||
+    x.classList.contains("icon")||
+    x.classList.contains("hl-source-type")||
+    x.classList.contains("hl-profile-pic")||
+    x.classList.contains("hl-badges")
+   )h.appendChild(x);
   });
 
-  e.insertBefore(h,e.firstChild);
+  if(!h.contains(n))h.appendChild(n);
+
+  e.insertBefore(h,m);
  });
 }
-
-new MutationObserver(mallen).observe(document.body,{
- childList:true,
- subtree:true
-});
-
+new MutationObserver(mallen).observe(document.body,{childList:true,subtree:true});
 mallen();
