@@ -9,7 +9,7 @@ body{
     width:100%;
     height:100%;
     overflow:hidden;
-    background:transparent;
+    background:#000;
     font-family:Arial,sans-serif;
 }
 
@@ -94,7 +94,7 @@ body{
 /* NOME */
 
 .username{
-    color:#fff;
+    color:#191919;
 
     font-size:15px;
     font-weight:800;
