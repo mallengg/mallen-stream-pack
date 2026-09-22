@@ -22,7 +22,7 @@ body{
     border:0;
 }
 
-#chat{
+#chat-bkp{
     position:absolute;
     left:0;
     bottom:0;
@@ -31,6 +31,19 @@ body{
     display:flex;
     flex-direction:column;
     justify-content:flex-end;
+
+    gap:10px;
+}
+
+#chat{
+    position:absolute;
+    top:0;
+    left:0;
+    width:520px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
 
     gap:10px;
 }
