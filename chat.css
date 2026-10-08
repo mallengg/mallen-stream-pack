@@ -67,6 +67,39 @@ body{
     white-space:nowrap;
 }
 
+/* CABEÇALHO PINK */
+.chat-header-pink{
+    display:inline-flex;
+    align-items:center;
+
+    width:fit-content;
+    min-height:34px;
+
+    padding:5px 9px 5px 6px;
+
+    gap:5px;
+
+    background:#d645ee;
+
+    white-space:nowrap;
+}
+
+/* CABEÇALHO PURPLE */
+.chat-header-purple{
+    display:inline-flex;
+    align-items:center;
+
+    width:fit-content;
+    min-height:34px;
+
+    padding:5px 9px 5px 6px;
+
+    gap:5px;
+
+    background:#6e25de;
+
+    white-space:nowrap;
+}
 
 /* PLATAFORMA */
 
