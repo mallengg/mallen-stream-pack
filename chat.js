@@ -89,7 +89,7 @@ function createMessage(data){
     const header =
         document.createElement("div");
 
-    header.className = "chat-header";
+    header.className = "chat-header-pink";
 
 
     /* PLATAFORMA */
