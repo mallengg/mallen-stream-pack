@@ -87,6 +87,84 @@ function processData(data){
 
 
 /* =========================
+   CONVERTER URLS EM LINKS
+========================= */
+
+function convertUrlsToLinks(container){
+
+    const walker = document.createTreeWalker(
+        container,
+        NodeFilter.SHOW_TEXT
+    );
+
+    const textNodes = [];
+
+    while(walker.nextNode()){
+
+        const node = walker.currentNode;
+
+        if(!node.parentElement.closest("a, script, style")){
+            textNodes.push(node);
+        }
+    }
+
+    const urlRegex = /https?:\/\/[^\s<>"]+/g;
+
+    textNodes.forEach(node => {
+
+        const text = node.textContent;
+
+        const matches = [...text.matchAll(urlRegex)];
+
+        if(!matches.length)
+            return;
+
+        const fragment =
+            document.createDocumentFragment();
+
+        let lastIndex = 0;
+
+        matches.forEach(match => {
+
+            const rawUrl = match[0];
+
+            // Remove pontuação final que não pertence à URL
+            const url = rawUrl.replace(/[.,!?;:]+$/, "");
+
+            fragment.appendChild(
+                document.createTextNode(
+                    text.slice(lastIndex, match.index)
+                )
+            );
+
+            if(url){
+
+                const link =
+                    document.createElement("a");
+
+                link.href = url;
+                link.textContent = url;
+                link.target = "_blank";
+                link.rel = "noopener noreferrer";
+
+                fragment.appendChild(link);
+            }
+
+            lastIndex = match.index + url.length;
+        });
+
+        fragment.appendChild(
+            document.createTextNode(
+                text.slice(lastIndex)
+            )
+        );
+
+        node.replaceWith(fragment);
+    });
+}
+
+
+/* =========================
    CRIAR MENSAGEM
 ========================= */
 
@@ -103,7 +181,6 @@ function createMessage(data){
     const header =
         document.createElement("div");
 
-    // Alterna entre amarelo, rosa e roxo
     header.className = headerClasses[headerIndex];
 
     headerIndex =
@@ -144,7 +221,7 @@ function createMessage(data){
 
         data.chatbadges.forEach(badge => {
 
-            let src =
+            const src =
                 typeof badge === "string"
                 ? badge
                 : badge?.src;
@@ -186,18 +263,19 @@ function createMessage(data){
     message.className = "message";
 
 
+    /* TEXTO */
+
     const content =
         document.createElement("div");
 
     content.className = "message-content";
 
-    /*
-       O Social Stream já entrega chatmessage
-       com os emotes processados em muitos casos.
-    */
-
+    // Mantém os emotes HTML do Social Stream
     content.innerHTML =
         data.chatmessage || "";
+
+    // Transforma URLs de texto em links clicáveis
+    convertUrlsToLinks(content);
 
     message.appendChild(content);
 
