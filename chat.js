@@ -1,3 +1,4 @@
+
 const params = new URLSearchParams(window.location.search);
 
 const session =
@@ -29,6 +30,19 @@ bridge.src =
     "&label=dock" +
     "&cleanoutput" +
     "&room=" + encodeURIComponent(session);
+
+
+/* =========================
+   CORES DOS CABEÇALHOS
+========================= */
+
+const headerClasses = [
+    "chat-header",
+    "chat-header-pink",
+    "chat-header-purple"
+];
+
+let headerIndex = 0;
 
 
 /* =========================
@@ -89,7 +103,11 @@ function createMessage(data){
     const header =
         document.createElement("div");
 
-    header.className = "chat-header-pink";
+    // Alterna entre amarelo, rosa e roxo
+    header.className = headerClasses[headerIndex];
+
+    headerIndex =
+        (headerIndex + 1) % headerClasses.length;
 
 
     /* PLATAFORMA */
@@ -171,8 +189,7 @@ function createMessage(data){
     const content =
         document.createElement("div");
 
-    content.className =
-        "message-content";
+    content.className = "message-content";
 
     /*
        O Social Stream já entrega chatmessage
@@ -207,8 +224,7 @@ function createMessage(data){
         const donation =
             document.createElement("div");
 
-        donation.className =
-            "donation";
+        donation.className = "donation";
 
         donation.textContent =
             data.hasDonation;
@@ -241,13 +257,7 @@ function createPlatformIcon(type){
     const img =
         document.createElement("img");
 
-    img.className =
-        "platform-icon";
-
-    /*
-       Por enquanto usamos os favicons
-       públicos das plataformas.
-    */
+    img.className = "platform-icon";
 
     const icons = {
 
