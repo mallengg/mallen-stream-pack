@@ -1,3 +1,4 @@
+
 *{
     box-sizing:border-box;
 }
@@ -36,8 +37,9 @@ body{
 }
 
 
-
-/* MENSAGEM COMPLETA */
+/* =========================
+   MENSAGEM COMPLETA
+========================= */
 
 .chat-item{
     display:flex;
@@ -49,42 +51,12 @@ body{
 }
 
 
-/* CABEÇALHO AMARELO */
+/* =========================
+   ESTILO BASE DOS CABEÇALHOS
+========================= */
 
-.chat-header{
-    display:inline-flex;
-    align-items:center;
-
-    width:fit-content;
-    min-height:34px;
-
-    padding:5px 9px 5px 6px;
-
-    gap:5px;
-
-    background:#ffd900;
-
-    white-space:nowrap;
-}
-
-/* CABEÇALHO PINK */
-.chat-header-pink{
-    display:inline-flex;
-    align-items:center;
-
-    width:fit-content;
-    min-height:34px;
-
-    padding:5px 9px 5px 6px;
-
-    gap:5px;
-
-    background:#d645ee;
-
-    white-space:nowrap;
-}
-
-/* CABEÇALHO PURPLE */
+.chat-header,
+.chat-header-pink,
 .chat-header-purple{
     display:inline-flex;
     align-items:center;
@@ -96,12 +68,52 @@ body{
 
     gap:5px;
 
-    background:#6e25de;
-
     white-space:nowrap;
 }
 
-/* PLATAFORMA */
+
+/* =========================
+   CABEÇALHO AMARELO
+========================= */
+
+.chat-header{
+    background:#ffd900;
+}
+
+.chat-header .username{
+    color:#191919;
+}
+
+
+/* =========================
+   CABEÇALHO PINK
+========================= */
+
+.chat-header-pink{
+    background:#d645ee;
+}
+
+.chat-header-pink .username{
+    color:#ffffff;
+}
+
+
+/* =========================
+   CABEÇALHO PURPLE
+========================= */
+
+.chat-header-purple{
+    background:#6e25de;
+}
+
+.chat-header-purple .username{
+    color:#ffffff;
+}
+
+
+/* =========================
+   PLATAFORMA
+========================= */
 
 .platform-icon{
     width:20px;
@@ -113,7 +125,9 @@ body{
 }
 
 
-/* AVATAR */
+/* =========================
+   AVATAR
+========================= */
 
 .avatar{
     width:22px;
@@ -125,7 +139,9 @@ body{
 }
 
 
-/* NOME */
+/* =========================
+   NOME
+========================= */
 
 .username{
     color:#191919;
@@ -138,7 +154,9 @@ body{
 }
 
 
-/* BADGES */
+/* =========================
+   BADGES
+========================= */
 
 .badges{
     display:flex;
@@ -154,7 +172,9 @@ body{
 }
 
 
-/* MENSAGEM PRETA */
+/* =========================
+   MENSAGEM PRETA
+========================= */
 
 .message{
     position:relative;
@@ -178,7 +198,9 @@ body{
 }
 
 
-/* TEXTURA */
+/* =========================
+   TEXTURA
+========================= */
 
 .message::before{
     content:"";
@@ -197,7 +219,9 @@ body{
 }
 
 
-/* TEXTO */
+/* =========================
+   TEXTO
+========================= */
 
 .message-content{
     position:relative;
@@ -205,7 +229,9 @@ body{
 }
 
 
-/* EMOTES */
+/* =========================
+   EMOTES
+========================= */
 
 .message-content img{
     max-height:24px;
@@ -215,7 +241,9 @@ body{
 }
 
 
-/* DOAÇÃO */
+/* =========================
+   DOAÇÃO
+========================= */
 
 .donation{
     position:relative;
