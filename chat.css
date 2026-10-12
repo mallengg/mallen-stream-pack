@@ -14,6 +14,11 @@ body{
     font-family:Arial,sans-serif;
 }
 
+
+/* =========================
+   SOCIAL STREAM BRIDGE
+========================= */
+
 #ssn-bridge{
     position:fixed;
     width:0;
@@ -22,6 +27,11 @@ body{
     top:-100px;
     border:0;
 }
+
+
+/* =========================
+   CONTAINER DO CHAT
+========================= */
 
 #chat{
     position:absolute;
@@ -190,7 +200,7 @@ body{
 
     background:#181818;
 
-    color:#fff;
+    color:#ffffff;
 
     font-size:18px;
     font-weight:600;
@@ -230,6 +240,30 @@ body{
 
 
 /* =========================
+   LINKS AMARELOS
+========================= */
+
+.message-content a,
+.message-content a:link,
+.message-content a:visited,
+.message-content a:hover,
+.message-content a:active{
+    color:#ffd900 !important;
+
+    text-decoration:underline !important;
+    text-decoration-color:#ffd900 !important;
+    text-underline-offset:2px;
+
+    cursor:pointer;
+}
+
+.message-content a:hover{
+    color:#ffe85c !important;
+    text-decoration-color:#ffe85c !important;
+}
+
+
+/* =========================
    EMOTES
 ========================= */
 
@@ -258,20 +292,3 @@ body{
 
     color:#ffd900;
 }
-
-
-
-/* LINKS DAS MENSAGENS */
-
-.message-content a,
-.message-content a:visited,
-.message-content a:hover,
-.message-content a:active {
-    color: #ffd900;
-    text-decoration: none;
-}
-
-.message-content a:hover {
-    text-decoration: underline;
-}
-
