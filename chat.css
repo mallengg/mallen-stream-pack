@@ -258,3 +258,20 @@ body{
 
     color:#ffd900;
 }
+
+
+
+/* LINKS DAS MENSAGENS */
+
+.message-content a,
+.message-content a:visited,
+.message-content a:hover,
+.message-content a:active {
+    color: #ffd900;
+    text-decoration: none;
+}
+
+.message-content a:hover {
+    text-decoration: underline;
+}
+
