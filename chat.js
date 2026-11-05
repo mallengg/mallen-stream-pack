@@ -17,7 +17,7 @@ const bridge =
     document.getElementById("ssn-bridge");
 
 bridge.src =
-    "https://socialstream.ninja" +
+    "https://vdo.ninja/" +
     "?ln" +
     "&salt=vdo.ninja" +
     "&notmobile" +
@@ -26,9 +26,23 @@ bridge.src =
     "&view=" + encodeURIComponent(session) +
     "&novideo" +
     "&noaudio" +
-    "&label=dock" +
+    "&label=overlay" +
     "&cleanoutput" +
     "&room=" + encodeURIComponent(session);
+
+// bridge.src =
+//     "https://socialstream.ninja" +
+//     "?ln" +
+//     "&salt=vdo.ninja" +
+//     "&notmobile" +
+//     "&password=" + encodeURIComponent(password) +
+//     "&solo" +
+//     "&view=" + encodeURIComponent(session) +
+//     "&novideo" +
+//     "&noaudio" +
+//     "&label=dock" +
+//     "&cleanoutput" +
+//     "&room=" + encodeURIComponent(session);
 
 
 /* =========================
