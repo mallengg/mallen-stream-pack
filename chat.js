@@ -393,3 +393,21 @@ function limitMessages(){
         chat.firstElementChild.remove();
     }
 }
+
+window.addEventListener("message", event => {
+
+    console.log("MSG:", event.origin, event.data);
+
+    if(event.source !== bridge.contentWindow)
+        return;
+
+    const received = event.data?.dataReceived;
+    console.log("RECEIVED:", received);
+
+    if(!received)
+        return;
+
+    if(received.overlayNinja){
+        processData(received.overlayNinja);
+    }
+});
