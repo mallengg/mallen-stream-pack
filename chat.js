@@ -2,7 +2,7 @@ const params = new URLSearchParams(window.location.search);
 
 const session =
     params.get("session") ||
-    "Qs9mUnnsPQ";
+    "L4CQCNjFMM";
 
 const password =
     params.get("password") ||
