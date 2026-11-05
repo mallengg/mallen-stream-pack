@@ -17,7 +17,7 @@ const bridge =
     document.getElementById("ssn-bridge");
 
 bridge.src =
-    "https://vdo.ninja/" +
+    "https://vdo.socialstream.ninja/" +
     "?ln" +
     "&salt=vdo.ninja" +
     "&notmobile" +
@@ -26,7 +26,7 @@ bridge.src =
     "&view=" + encodeURIComponent(session) +
     "&novideo" +
     "&noaudio" +
-    "&label=overlay" +
+    "&label=dock" +
     "&cleanoutput" +
     "&room=" + encodeURIComponent(session);
 
@@ -393,21 +393,3 @@ function limitMessages(){
         chat.firstElementChild.remove();
     }
 }
-
-window.addEventListener("message", event => {
-
-    console.log("MSG:", event.origin, event.data);
-
-    if(event.source !== bridge.contentWindow)
-        return;
-
-    const received = event.data?.dataReceived;
-    console.log("RECEIVED:", received);
-
-    if(!received)
-        return;
-
-    if(received.overlayNinja){
-        processData(received.overlayNinja);
-    }
-});
