@@ -1,36 +1,26 @@
-
-const params = new URLSearchParams(window.location.search);
-
-const session =
-    params.get("session") ||
-    "9w2D95rNmA";
-
-const password =
-    params.get("password") ||
-    "false";
-
-
 /* =========================
-   SOCIAL STREAM BRIDGE
+   SOCIAL STREAM BRIDGE - CONEXÃO LOCAL AUTOMÁTICA
 ========================= */
 
 const bridge =
     document.getElementById("ssn-bridge");
 
+// Usando a URL oficial do dock local do Social Stream
 bridge.src =
-    "https://vdo.socialstream.ninja/" +
+    "https://socialstream.ninja/dock.html" +
     "?ln" +
     "&salt=vdo.ninja" +
     "&notmobile" +
-    "&password=" + encodeURIComponent(password) +
     "&solo" +
-    "&view=" + encodeURIComponent(session) +
     "&novideo" +
     "&noaudio" +
     "&label=dock" +
     "&cleanoutput" +
-    "&room=" + encodeURIComponent(session);
-
+    "&server" +          // Ativa o modo de escuta de servidores
+    "&server2" +         // Conecta diretamente ao fluxo do app de desktop
+    "&server3" +         // Garante redundância de dados
+    "&localserver" +     // Diz para o código procurar seu PC (127.0.0.1)
+    "&localserverport=3003"; // Porta padrão do aplicativo de desktop
 
 /* =========================
    CORES DOS CABEÇALHOS
